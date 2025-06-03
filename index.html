@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beauty Bliss</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<div id="carrito" class="oculto">
+  <h3>Carrito</h3>
+  <ul id="carrito-lista"></ul>
+  <p id="total">Total: $0.00</p>
+  <button id="cerrar-carrito">Cerrar</button>
+</div>
+
+<button id="boton-carrito">🛒</button>
+
+
+<body>
+  <header>
+ <header class="navbar">
+  <div class="logo">
+    <img src="logo.png" alt="Beauty Bliss Logo">
+  </div>
+  <nav class="nav-links">
+    <a href="#">Inicio</a>
+    <a href="#">Sobre nosotros</a>
+    <a href="#">Maquillaje</a>
+    <a href="#">Cuidado de la piel</a>
+    <a href="#">Fragancias</a>
+    <a href="#">Ofertas</a>
+    <a href="#">Contacto</a>
+  </nav>
+</header>
+
+
+
+    
+    
+
+    <div class="cart-icon" onclick="toggleCart()">
+      🛒<span id="cart-count">0</span>
+    </div>
+  </header>
+
+  <main>
+
+<section class="destacados">
+  <h2>Descubre</h2>
+  <h1>Nuestros Exóticos Productos de Belleza</h1>
+  <button class="comprar-btn">Comprar ahora</button>
+
+  <div class="categorias">
+    <div class="categoria">
+      <img src="skincare.png" alt="Skincare">
+      <p>Skincare</p>
+    </div>
+    <div class="categoria">
+      <img src="maquillaje.png" alt="Maquillaje">
+      <p>Maquillaje</p>
+    </div>
+    <div class="categoria">
+      <img src="cabello.png" alt="Cuidado del Cabello">
+      <p>Cuidado del Cabello</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+    
+    <section class="destacados">
+      <h2>Productos Destacados</h2>
+      <div class="producto" data-nombre="Lipstick" data-precio="18">
+  <img src="labial.png" alt="Lipstick">
+  <p>Lipstick - $18.00</p>
+  <button>Agregar al carrito</button>
+</div>
+   
+<div class="producto" data-nombre="Colonia" data-precio="23">
+  <img src="colonia.png" alt="Colonia">
+  <p>Colonia - $23.00</p>
+  <button>Agregar al carrito</button>
+</div>
+
+
+
+
+      <div class="producto" data-nombre="Crema hidratante" data-precio="11">
+  <img src="crema hidratante.png" alt="Crema Humectante">
+  <p>Crema Hidratante - $11.00</p>
+  <button>Agregar al carrito</button>
+</div>
+
+
+   <div class="producto" data-nombre="Esmalte" data-precio="5">
+  <img src="esmalte.png" alt="Esmalte">
+  <p>Esmalte - $5.00</p>
+  <button>Agregar al carrito</button>
+</div>
+
+      
+
+
+    </section>
+  </main>
+
+  <aside id="carrito" class="oculto">
+    <h3>Carrito</h3>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0.00</span></p>
+  </aside>
+
+  <script src="script.js"></script>
+
+<footer class="footer">
+  <div class="footer-section">
+    <h4>Sobre Beauty Bliss</h4>
+    <p>Salud y Cuidado </p>
+    <p>Sustentabilidad</p>
+     <p>Nuestro Compromiso </p>
+  </div>
+  <div class="footer-section">
+    <h4>AYUDA</h4>
+    <p>Encuentra Beauty Bliss</p>
+    <p>Ayuda y Contacto</p>
+    <p>Libro de Reclamaciones</p>
+  </div>
+  <div class="footer-section">
+    <h4>SOPORTE</h4>
+    <p>Términos y Condiciones</p>
+    <p>Políticas de Cookies</p>
+    <p>Políticas de Privacidad</p>
+  </div>
+</footer>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
