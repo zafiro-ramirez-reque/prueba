@@ -1,93 +1,108 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cuidado de la Piel - Beauty Bliss</title>
+  <title>Contacto | Beauty Bliss</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .contenedor-productos {
-      display: flex;
-      padding: 2rem;
-    }
-
-    .filtros {
-      width: 200px;
-      margin-right: 2rem;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background-color: #f9f9f9;
-    }
-
-    .filtros h3 {
-      margin-bottom: 1rem;
-    }
-
-    .filtros label {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .productos {
-      flex: 1;
-    }
-
-    .grid-productos {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .producto {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
       background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .producto img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      margin-bottom: 1rem;
+    header.navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    .producto h4 {
+    .logo img {
+      height: 50px;
+    }
+
+    .nav-links a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .contacto-container {
+      padding: 60px 80px;
+      text-align: center;
+    }
+
+    .contacto-container h2 {
+      color: #4BB295;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .contacto-container p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 50px;
+      color: #555;
+    }
+
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      max-width: 1000px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .contacto-item {
+      padding: 10px;
+    }
+
+    .contacto-item h4 {
+      color: #4BB295;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .contacto-item p {
       font-size: 1rem;
-      margin-bottom: 0.5rem;
+      margin-top: 5px;
+      color: #444;
     }
 
-    .precio-original {
-      text-decoration: line-through;
-      color: #888;
-      margin-right: 0.5rem;
-    }
-
-    .precio-descuento {
-      color: #e91e63;
-      font-weight: bold;
-    }
-
-    .producto button {
-      margin-top: 0.5rem;
-      padding: 0.5rem 1rem;
+    .back-button {
+      margin: 20px;
+      padding: 10px 20px;
       background-color: #e91e63;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
     }
 
-    .producto button:hover {
+    .back-button:hover {
       background-color: #c2185b;
+    }
+
+    footer {
+      background-color: #f8f8f8;
+      padding: 2rem;
+      text-align: center;
+      color: #777;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
+
   <header class="navbar">
     <div class="logo">
       <img src="logo.png" alt="Beauty Bliss Logo">
@@ -103,157 +118,37 @@
     </nav>
   </header>
 
- <main>
-  <h1 class="titulo">Ofertas Exclusivas</h1>
-  <div class="grid-productos">
-    <div class="producto">
-      <img src="oferta1.png" alt="Labial Coral">
-      <h4>Labial Coral Glow</h4>
-      <p><span class="precio-original">S/ 35.00</span> <span class="precio-descuento">S/ 25.00</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
+  <main class="contacto-container">
+    <h2>No dudes en contactarnos si necesitas ayuda</h2>
+    <p>
+      ¿Tienes preguntas sobre nuestros productos, servicios o tu pedido? En Beauty Bliss estamos aquí para ayudarte. Escríbenos por WhatsApp, mándanos un correo o revisa nuestros horarios de atención. Queremos que tu experiencia de compra sea lo más cómoda, segura y satisfactoria posible.
+    </p>
 
-    <div class="producto">
-      <img src="oferta2.png" alt="Perfume noche">
-      <h4>Perfume Noche Intensa</h4>
-      <p><span class="precio-original">S/ 110.00</span> <span class="precio-descuento">S/ 77.00</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta3.png" alt="Crema facial">
-      <h4>Crema Facial Día</h4>
-      <p><span class="precio-original">S/ 58.00</span> <span class="precio-descuento">S/ 40.60</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta4.png" alt="Máscara de pestañas">
-      <h4>Máscara de Pestañas Max</h4>
-      <p><span class="precio-original">S/ 49.00</span> <span class="precio-descuento">S/ 34.30</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta5.png" alt="Body mist">
-      <h4>Body Mist Floral</h4>
-      <p><span class="precio-original">S/ 39.00</span> <span class="precio-descuento">S/ 27.30</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta6.png" alt="Iluminador">
-      <h4>Iluminador Soft Glow</h4>
-      <p><span class="precio-original">S/ 50.00</span> <span class="precio-descuento">S/ 35.00</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta7.png" alt="Perfume Fresh Men">
-      <h4>Colonia Fresh Men</h4>
-      <p><span class="precio-original">S/ 70.00</span> <span class="precio-descuento">S/ 49.00</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta8.png" alt="Rubor">
-      <h4>Rubor Natural Blush</h4>
-      <p><span class="precio-original">S/ 38.00</span> <span class="precio-descuento">S/ 26.60</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta9.png" alt="Base líquida">
-      <h4>Base Líquida Light</h4>
-      <p><span class="precio-original">S/ 60.00</span> <span class="precio-descuento">S/ 42.00</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta10.png" alt="Crema corporal">
-      <h4>Crema Corporal Hidratante</h4>
-      <p><span class="precio-original">S/ 45.00</span> <span class="precio-descuento">S/ 31.50</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta11.png" alt="Tónico facial">
-      <h4>Tónico Facial Refrescante</h4>
-      <p><span class="precio-original">S/ 36.00</span> <span class="precio-descuento">S/ 25.20</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta12.png" alt="Delineador">
-      <h4>Delineador Waterproof</h4>
-      <p><span class="precio-original">S/ 33.00</span> <span class="precio-descuento">S/ 23.10</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta13.png" alt="Gloss">
-      <h4>Gloss Brillante Cherry</h4>
-      <p><span class="precio-original">S/ 29.00</span> <span class="precio-descuento">S/ 20.30</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta14.png" alt="Sombra compacta">
-      <h4>Sombra Compacta</h4>
-      <p><span class="precio-original">S/ 42.00</span> <span class="precio-descuento">S/ 29.40</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-    <div class="producto">
-      <img src="oferta15.png" alt="Set mini perfumes">
-      <h4>Set Mini Perfumes</h4>
-      <p><span class="precio-original">S/ 79.00</span> <span class="precio-descuento">S/ 55.30</span></p>
-      <p class="descuento">30% de descuento</p>
-      <button>Agregar al carrito</button>
-    </div>
-
-
-
-
-
+    <div class="contacto-grid">
+      <div class="contacto-item">
+        <h4>📍 Tiendas</h4>
+        <p>No contamos con tiendas físicas aún, pero puedes comprar a través de nuestros puntos de venta digitales.</p>
       </div>
-    </section>
+      <div class="contacto-item">
+        <h4>📞 WhatsApp</h4>
+        <p>994 780 161</p>
+      </div>
+      <div class="contacto-item">
+        <h4>⏰ Horarios</h4>
+        <p>Lunes a Viernes: 9:00 am - 6:00 pm<br>Sábado y Domingo: 9:00 am - 4:00 pm</p>
+      </div>
+      <div class="contacto-item">
+        <h4>✉️ Correo</h4>
+        <p>hola@beautybliss.com</p>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-button">Regresar a Inicio</a>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-section">
-      <h4>Sobre Beauty Bliss</h4>
-      <p>Salud y Cuidado</p>
-      <p>Sustentabilidad</p>
-      <p>Nuestro Compromiso</p>
-    </div>
-    <div class="footer-section">
-      <h4>AYUDA</h4>
-      <p>Encuentra Beauty Bliss</p>
-      <p>Ayuda y Contacto</p>
-      <p>Libro de Reclamaciones</p>
-    </div>
-    <div class="footer-section">
-      <h4>SOPORTE</h4>
-      <p>Términos y Condiciones</p>
-      <p>Políticas de Cookies</p>
-      <p>Políticas de Privacidad</p>
-    </div>
+  <footer>
+    <p>&copy; 2025 Beauty Bliss. Todos los derechos reservados.</p>
   </footer>
+
 </body>
 </html>
