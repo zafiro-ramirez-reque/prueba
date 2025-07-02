@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación de Pago - Beauty Bliss</title>
+    <style>
+        :root {
+            --primary: #e91e63;
+            --primary-dark: #c2185b;
+            --secondary: #9c27b0;
+            --text: #333;
+            --light: #f8f8f8;
+            --success: #4CAF50;
+            --error: #F44336;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .payment-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .payment-form {
+            display: none;
+        }
+
+        .payment-form.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .currency {
+            position: relative;
+        }
+
+        .currency::before {
+            content: "S/.";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text);
+            font-weight: bold;
+        }
+
+        .currency input {
+            padding-left: 40px;
+        }
+
+        .confirmation {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+
+        .confirmation svg {
+            width: 60px;
+            height: 60px;
+            fill: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .confirmation h2 {
+            color: var(--success);
+        }
+
+        .confirmation p {
+            margin-top: 1rem;
+            color: var(--text);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .yape-qr {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .yape-qr img {
+            width: 150px;
+            height: 150px;
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+        }
+
+        .product-summary {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-top: 1px solid #ddd;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .loader {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 1rem auto;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Finalizar Compra</h1>
+
+        <!-- Resumen del pedido -->
+        <div class="product-summary">
+            <h3>Tu Pedido</h3>
+            <div class="product-item">
+                <span>Lipstick</span>
+                <span>S/. 18.00</span>
+            </div>
+            <div class="product-item">
+                <span>Colonia</span>
+                <span>S/. 23.00</span>
+            </div>
+            <div class="product-item">
+                <span>Crema Hidratante</span>
+                <span>S/. 11.00</span>
+            </div>
+            <div class="total">
+                <span>Total</span>
+                <span>S/. 52.00</span>
+            </div>
+        </div>
+
+        <!-- Tabs de métodos de pago -->
+        <div class="payment-tabs">
+            <div class="tab active" onclick="showTab('card')">Tarjeta</div>
+            <div class="tab" onclick="showTab('yape')">Yape</div>
+        </div>
+
+        <!-- Formulario de pago con tarjeta -->
+        <div id="card-form" class="payment-form active">
+            <div class="form-group">
+                <label for="card-number">Número de Tarjeta</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="card-expiry">Fecha de Expiración</label>
+                    <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+                </div>
+                <div class="form-group">
+                    <label for="card-cvv">CVV</label>
+                    <input type="text" id="card-cvv" placeholder="123" maxlength="3">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="card-name">Nombre en la Tarjeta</label>
+                <input type="text" id="card-name" placeholder="JUAN PEREZ">
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" placeholder="tu@email.com">
+            </div>
+            <button onclick="processPayment()">Pagar S/. 52.00</button>
+            
+            <!-- Loader -->
+            <div id="card-loader" class="loader"></div>
+        </div>
+
+        <!-- Formulario de pago con Yape -->
+        <div id="yape-form" class="payment-form">
+            <div class="yape-qr">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/10063411-f472-475d-8bd9-21da653d7f1b.png" alt="Código QR de Yape para pagar S/. 52.00">
+            </div>
+            <div class="form-group">
+                <label for="yape-number">Número de Celular</label>
+                <input type="text" id="yape-number" placeholder="999 999 999" maxlength="9">
+            </div>
+            <div class="form-group">
+                <label for="yape-email">Correo Electrónico</label>
+                <input type="email" id="yape-email" placeholder="tu@email.com">
+            </div>
+            <button onclick="processYape()">Confirmar Pago</button>
+            
+            <!-- Loader -->
+            <div id="yape-loader" class="loader"></div>
+        </div>
+
+        <!-- Mensaje de confirmación -->
+        <div id="confirmation" class="confirmation">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <h2>¡Pago Completado!</h2>
+            <p>Hemos enviado un correo de confirmación con los detalles de tu compra.</p>
+            <p>Gracias por comprar en Beauty Bliss.</p>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar el tab seleccionado
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(`${tabId}-form`).classList.add('active');
+        }
+
+        // Validar formulario de tarjeta
+        function validateCard() {
+            const cardNumber = document.getElementById('card-number').value;
+            const cardExpiry = document.getElementById('card-expiry').value;
+            const cardCvv = document.getElementById('card-cvv').value;
+            const cardName = document.getElementById('card-name').value;
+            const email = document.getElementById('email').value;
+            
+            if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, ''))) {
+                alert('Por favor ingresa un número de tarjeta válido (16 dígitos)');
+                return false;
+            }
+            
+            if (!/^\d{2}\/\d{2}$/.test(cardExpiry)) {
+                alert('Por favor ingresa una fecha de expiración válida (MM/AA)');
+                return false;
+            }
+            
+            if (!/^\d{3}$/.test(cardCvv)) {
+                alert('Por favor ingresa un CVV válido (3 dígitos)');
+                return false;
+            }
+            
+            if (cardName.trim() === '') {
+                alert('Por favor ingresa el nombre como aparece en la tarjeta');
+                return false;
+            }
+            
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                alert('Por favor ingresa un correo electrónico válido');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Validar formulario de Yape
+        function validateYape() {
+            const yapeNumber = document.getElementById('yape-number').value;
+            const email = document.getElementById('yape-email').value;
+            
+            if (!/^\d{9}$/.test(yapeNumber.replace(/\s/g, ''))) {
+                alert('Por favor ingresa un número de celular válido (9 dígitos)');
+                return false;
+            }
+            
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                alert('Por favor ingresa un correo electrónico válido');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Simular procesamiento de pago con tarjeta
+        function processPayment() {
+            if (!validateCard()) return;
+            
+            const loader = document.getElementById('card-loader');
+            loader.style.display = 'block';
+            
+            // Simular tiempo de procesamiento
+            setTimeout(() => {
+                loader.style.display = 'none';
+                
+                // Mostrar confirmación
+                document.getElementById('card-form').style.display = 'none';
+                document.getElementById('confirmation').style.display = 'block';
+                
+                // Simular envío de correo
+                const email = document.getElementById('email').value;
+                console.log(`Simulando envío de correo a: ${email}`);
+                console.log('Asunto: Confirmación de pago en Beauty Bliss');
+                console.log('Contenido: Gracias por tu compra de S/. 52.00 usando tarjeta.');
+            }, 2000);
+        }
+
+        // Simular procesamiento de pago con Yape
+        function processYape() {
+            if (!validateYape()) return;
+            
+            const loader = document.getElementById('yape-loader');
+            loader.style.display = 'block';
+            
+            // Simular tiempo de procesamiento
+            setTimeout(() => {
+                loader.style.display = 'none';
+                
+                // Mostrar confirmación
+                document.getElementById('yape-form').style.display = 'none';
+                document.getElementById('confirmation').style.display = 'block';
+                
+                // Simular envío de correo
+                const email = document.getElementById('yape-email').value;
+                console.log(`Simulando envío de correo a: ${email}`);
+                console.log('Asunto: Confirmación de pago en Beauty Bliss');
+                console.log('Contenido: Gracias por tu compra de S/. 52.00 usando Yape.');
+            }, 2000);
+        }
+    // Carrito de compras
+        let cart = [];
+        let total = 0;
+
+        function toggleCart() {
+            document.getElementById('carrito').classList.toggle('oculto');
+        }
+
+        function updateCart() {
+            const cartList = document.getElementById('carrito-lista');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('total');
+            
+            cartList.innerHTML = '';
+            cartCount.textContent = cart.length;
+            cartTotal.textContent = total.toFixed(2);
+            
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - S/.${item.price.toFixed(2)}`;
+                cartList.appendChild(li);
+            });
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            total += price;
+            updateCart();
+        }
+
+        document.getElementById('cerrar-carrito').addEventListener('click', toggleCart);
+        document.getElementById('vaciar-carrito').addEventListener('click', () => {
+            cart = [];
+            total = 0;
+            updateCart();
+        });
+
+        // Event listeners for add to cart buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productDiv = this.closest('.producto');
+                const name = productDiv.dataset.nombre;
+                const price = parseFloat(productDiv.dataset.precio);
+                addToCart(name, price);
+                
+                // Show the cart after adding an item
+                if (document.getElementById('carrito').classList.contains('oculto')) {
+                    toggleCart();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
