@@ -189,6 +189,36 @@
     </section>
   </main>
 
+  <!-- Formulario de pago (inicialmente oculto) -->
+  <div id="payment-form" class="oculto" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:2000;">
+    <div style="background:white; padding:2rem; border-radius:10px; max-width:500px; width:90%;">
+      <h2>Pagar S/. <span id="payment-total">0.00</span></h2>
+      <div class="payment-tabs" style="display:flex; margin-bottom:1rem;">
+        <div class="tab active" onclick="showPaymentTab('card')">Tarjeta</div>
+        <div class="tab" onclick="showPaymentTab('yape')">Yape</div>
+      </div>
+      
+      <!-- Tarjeta -->
+      <div id="card-payment" class="payment-content">
+        <input type="text" placeholder="Número de tarjeta" style="width:100%; padding:0.8rem; margin-bottom:1rem;">
+        <div style="display:flex; gap:1rem;">
+          <input type="text" placeholder="MM/AA" style="flex:1; padding:0.8rem;">
+          <input type="text" placeholder="CVV" style="flex:1; padding:0.8rem;">
+        </div>
+        <input type="text" placeholder="Nombre en tarjeta" style="width:100%; padding:0.8rem; margin:1rem 0;">
+      </div>
+      
+      <!-- Yape -->
+      <div id="yape-payment" class="payment-content" style="display:none; text-align:center;">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/85a83826-2828-477d-b51c-40dc80f3ef36.png" alt="QR Yape" style="max-width:200px; margin:1rem auto;">
+        <input type="text" placeholder="Número de celular" style="width:100%; padding:0.8rem; margin-bottom:1rem;">
+      </div>
+      
+      <button onclick="completePayment()" style="background:#4CAF50; color:white; border:none; padding:1rem; width:100%; margin-top:1rem; border-radius:5px;">Confirmar Pago</button>
+      <button onclick="closePayment()" style="background:#e91e63; color:white; border:none; padding:1rem; width:100%; margin-top:1rem; border-radius:5px;">Cancelar</button>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-section">
       <h4>Sobre Beauty Bliss</h4>
@@ -264,13 +294,44 @@
     });
 
     // Simulación de pago
+    // Funciones para el sistema de pago
+    function showPaymentTab(tab) {
+      document.querySelectorAll('.payment-content').forEach(el => el.style.display = 'none');
+      document.getElementById(tab+'-payment').style.display = 'block';
+    }
+
+    function closePayment() {
+      document.getElementById('payment-form').classList.add('oculto');
+    }
+
+    function completePayment() {
+      // Simular procesamiento de pago
+      setTimeout(() => {
+        closePayment();
+        alert('Pago completado con éxito! Se envió un correo de confirmación.');
+        
+        // Limpiar carrito despues de pago
+        cart = [];
+        total = 0;
+        updateCart();
+        
+        // Simular envio de correo (se muestra en consola)
+        console.log('Correo enviado con detalles de compra');
+      }, 2000);
+    }
+
     document.getElementById('pagar-btn').addEventListener('click', () => {
       if (cart.length === 0) {
         alert('Tu carrito está vacío. Agrega productos para continuar.');
         return;
       }
-      alert(`Total a pagar: S/. ${total.toFixed(2)}`);
-      // Aquí puedes agregar la lógica para la pasarela de pagos
+      document.getElementById('payment-total').textContent = total.toFixed(2);
+      document.getElementById('payment-form').classList.remove('oculto');
+      showPaymentTab('card');
+    });
+  </script>
+</body>
+</html>
     });
   </script>
 </body>
