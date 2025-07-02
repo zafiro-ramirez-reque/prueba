@@ -89,15 +89,6 @@
             font-size: 16px;
         }
 
-        .row {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .row .form-group {
-            flex: 1;
-        }
-
         button {
             background-color: var(--primary);
             color: white;
@@ -115,98 +106,15 @@
             background-color: var(--primary-dark);
         }
 
-        .currency {
-            position: relative;
-        }
-
-        .currency::before {
-            content: "S/.";
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text);
-            font-weight: bold;
-        }
-
-        .currency input {
-            padding-left: 40px;
-        }
-
         .confirmation {
             display: none;
             text-align: center;
             animation: fadeIn 1s;
         }
 
-        .confirmation svg {
-            width: 60px;
-            height: 60px;
-            fill: var(--success);
-            margin-bottom: 1rem;
-        }
-
-        .confirmation h2 {
-            color: var(--success);
-        }
-
-        .confirmation p {
-            margin-top: 1rem;
-            color: var(--text);
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-
-        .yape-qr {
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .yape-qr img {
-            width: 150px;
-            height: 150px;
-            border: 1px solid #ddd;
-            padding: 0.5rem;
-        }
-
-        .product-summary {
-            background: var(--light);
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .total {
-            font-weight: bold;
-            font-size: 1.2rem;
-            border-top: 1px solid #ddd;
-            padding-top: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .loader {
-            display: none;
-            width: 50px;
-            height: 50px;
-            margin: 1rem auto;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -247,15 +155,13 @@
                 <label for="card-number">Número de Tarjeta</label>
                 <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
             </div>
-            <div class="row">
-                <div class="form-group">
-                    <label for="card-expiry">Fecha de Expiración</label>
-                    <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
-                </div>
-                <div class="form-group">
-                    <label for="card-cvv">CVV</label>
-                    <input type="text" id="card-cvv" placeholder="123" maxlength="3">
-                </div>
+            <div class="form-group">
+                <label for="card-expiry">Fecha de Expiración</label>
+                <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+            </div>
+            <div class="form-group">
+                <label for="card-cvv">CVV</label>
+                <input type="text" id="card-cvv" placeholder="123" maxlength="3">
             </div>
             <div class="form-group">
                 <label for="card-name">Nombre en la Tarjeta</label>
@@ -266,16 +172,11 @@
                 <input type="email" id="email" placeholder="tu@email.com">
             </div>
             <button onclick="processPayment()">Pagar S/. 52.00</button>
-            
-            <!-- Loader -->
-            <div id="card-loader" class="loader"></div>
+            <button onclick="closePayment()">Cancelar</button>
         </div>
 
         <!-- Formulario de pago con Yape -->
         <div id="yape-form" class="payment-form">
-            <div class="yape-qr">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/10063411-f472-475d-8bd9-21da653d7f1b.png" alt="Código QR de Yape para pagar S/. 52.00">
-            </div>
             <div class="form-group">
                 <label for="yape-number">Número de Celular</label>
                 <input type="text" id="yape-number" placeholder="999 999 999" maxlength="9">
@@ -285,16 +186,11 @@
                 <input type="email" id="yape-email" placeholder="tu@email.com">
             </div>
             <button onclick="processYape()">Confirmar Pago</button>
-            
-            <!-- Loader -->
-            <div id="yape-loader" class="loader"></div>
+            <button onclick="closePayment()">Cancelar</button>
         </div>
 
         <!-- Mensaje de confirmación -->
         <div id="confirmation" class="confirmation">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
             <h2>¡Pago Completado!</h2>
             <p>Hemos enviado un correo de confirmación con los detalles de tu compra.</p>
             <p>Gracias por comprar en Beauty Bliss.</p>
@@ -313,6 +209,13 @@
             
             document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
             document.getElementById(`${tabId}-form`).classList.add('active');
+        }
+
+        function closePayment() {
+            document.getElementById('card-form').style.display = 'none';
+            document.getElementById('yape-form').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'none';
+            // Aquí puedes agregar cualquier lógica adicional que necesites al cerrar el formulario
         }
 
         // Validar formulario de tarjeta
@@ -373,22 +276,11 @@
         function processPayment() {
             if (!validateCard()) return;
             
-            const loader = document.getElementById('card-loader');
-            loader.style.display = 'block';
-            
             // Simular tiempo de procesamiento
             setTimeout(() => {
-                loader.style.display = 'none';
-                
                 // Mostrar confirmación
                 document.getElementById('card-form').style.display = 'none';
                 document.getElementById('confirmation').style.display = 'block';
-                
-                // Simular envío de correo
-                const email = document.getElementById('email').value;
-                console.log(`Simulando envío de correo a: ${email}`);
-                console.log('Asunto: Confirmación de pago en Beauty Bliss');
-                console.log('Contenido: Gracias por tu compra de S/. 52.00 usando tarjeta.');
             }, 2000);
         }
 
@@ -396,75 +288,13 @@
         function processYape() {
             if (!validateYape()) return;
             
-            const loader = document.getElementById('yape-loader');
-            loader.style.display = 'block';
-            
             // Simular tiempo de procesamiento
             setTimeout(() => {
-                loader.style.display = 'none';
-                
                 // Mostrar confirmación
                 document.getElementById('yape-form').style.display = 'none';
                 document.getElementById('confirmation').style.display = 'block';
-                
-                // Simular envío de correo
-                const email = document.getElementById('yape-email').value;
-                console.log(`Simulando envío de correo a: ${email}`);
-                console.log('Asunto: Confirmación de pago en Beauty Bliss');
-                console.log('Contenido: Gracias por tu compra de S/. 52.00 usando Yape.');
             }, 2000);
         }
-    // Carrito de compras
-        let cart = [];
-        let total = 0;
-
-        function toggleCart() {
-            document.getElementById('carrito').classList.toggle('oculto');
-        }
-
-        function updateCart() {
-            const cartList = document.getElementById('carrito-lista');
-            const cartCount = document.getElementById('cart-count');
-            const cartTotal = document.getElementById('total');
-            
-            cartList.innerHTML = '';
-            cartCount.textContent = cart.length;
-            cartTotal.textContent = total.toFixed(2);
-            
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.name} - S/.${item.price.toFixed(2)}`;
-                cartList.appendChild(li);
-            });
-        }
-
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            total += price;
-            updateCart();
-        }
-
-        document.getElementById('cerrar-carrito').addEventListener('click', toggleCart);
-        document.getElementById('vaciar-carrito').addEventListener('click', () => {
-            cart = [];
-            total = 0;
-            updateCart();
-        });
-
-        // Event listeners for add to cart buttons
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const productDiv = this.closest('.producto');
-                const name = productDiv.dataset.nombre;
-                const price = parseFloat(productDiv.dataset.precio);
-                addToCart(name, price);
-                
-                // Show the cart after adding an item
-                if (document.getElementById('carrito').classList.contains('oculto')) {
-                    toggleCart();
-                }
-            });
-        });
     </script>
 </body>
 </html>
