@@ -1,0 +1,234 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuidado de la Piel - Beauty Bliss</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .contenedor-productos {
+      display: flex;
+      padding: 2rem;
+    }
+
+    .filtros {
+      width: 200px;
+      margin-right: 2rem;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .filtros h3 {
+      margin-bottom: 1rem;
+    }
+
+    .filtros label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .productos {
+      flex: 1;
+    }
+
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .producto {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .producto img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .producto h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .precio-original {
+      text-decoration: line-through;
+      color: #888;
+      margin-right: 0.5rem;
+    }
+
+    .precio-descuento {
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    .producto button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .producto button:hover {
+      background-color: #c2185b;
+    }
+  </style>
+</head>
+<body>
+ 
+  <header class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="Beauty Bliss Logo">
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="Sobre-nosotros.html">Sobre nosotros</a>
+      <a href="maquillaje.html">Maquillaje</a>
+      <a href="cuidado de la piel.html">Cuidado de la piel</a>
+      <a href="fragancias.html">Fragancias</a>
+      <a href="ofertas.html">Ofertas</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main>
+  <h1 class="titulo">Maquillaje</h1>
+  <div class="contenedor">
+    
+    <aside class="filtro">
+      <h3>Filtrar por:</h3>
+      <label><input type="checkbox"> Labios</label>
+      <label><input type="checkbox"> Ojos</label>
+      <label><input type="checkbox"> Rostro</label>
+      <label><input type="checkbox"> En oferta</label>
+      <label><input type="checkbox"> Menos de S/ 30</label>
+      <label><input type="checkbox"> Más de S/ 60</label>
+    </aside>
+
+    <div class="grid-productos">
+      <div class="producto">
+        <img src="maquillaje1.png" alt="Labial mate">
+        <h4>Labial Mate Intenso</h4>
+        <p><span class="precio-original">S/ 45.00</span> <span class="precio-descuento">S/ 35.00</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje2.png" alt="Base líquida">
+        <h4>Base Líquida Natural</h4>
+        <p><span class="precio-original">S/ 68.00</span> <span class="precio-descuento">S/ 54.00</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje3.png" alt="Rímel">
+        <h4>Máscara Volumen</h4>
+        <p><span class="precio-original">S/ 39.90</span> <span class="precio-descuento">S/ 29.90</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje4.png" alt="Rubor en polvo">
+        <h4>Rubor Rosado Suave</h4>
+        <p><span class="precio-original">S/ 35.00</span> <span class="precio-descuento">S/ 28.00</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje5.png" alt="Delineador">
+        <h4>Delineador Líquido Precisión</h4>
+        <p><span class="precio-original">S/ 29.00</span> <span class="precio-descuento">S/ 22.50</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje6.png" alt="Sombras">
+        <h4>Paleta de Sombras Naturales</h4>
+        <p><span class="precio-original">S/ 79.00</span> <span class="precio-descuento">S/ 64.00</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje7.png" alt="Corrector">
+        <h4>Corrector Antiojeras</h4>
+        <p><span class="precio-original">S/ 34.00</span> <span class="precio-descuento">S/ 27.00</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje8.png" alt="Iluminador">
+        <h4>Iluminador Glow</h4>
+        <p><span class="precio-original">S/ 55.00</span> <span class="precio-descuento">S/ 42.00</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje9.png" alt="Polvo compacto">
+        <h4>Polvo Compacto Matificante</h4>
+        <p><span class="precio-original">S/ 47.00</span> <span class="precio-descuento">S/ 36.90</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje10.png" alt="Primer">
+        <h4>Primer Alisador</h4>
+        <p><span class="precio-original">S/ 49.00</span> <span class="precio-descuento">S/ 39.90</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje11.png" alt="Gel cejas">
+        <h4>Gel Fijador de Cejas</h4>
+        <p><span class="precio-original">S/ 27.00</span> <span class="precio-descuento">S/ 21.00</span></p>
+        <button>Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="maquillaje12.png" alt="Gloss labial">
+        <h4>Gloss Labial Brillante</h4>
+        <p><span class="precio-original">S/ 32.00</span> <span class="precio-descuento">S/ 25.00</span></p>
+        <button>Agregar al carrito</button>
+  
+
+
+
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-section">
+      <h4>Sobre Beauty Bliss</h4>
+      <p>Salud y Cuidado</p>
+      <p>Sustentabilidad</p>
+      <p>Nuestro Compromiso</p>
+    </div>
+    <div class="footer-section">
+      <h4>AYUDA</h4>
+      <p>Encuentra Beauty Bliss</p>
+      <p>Ayuda y Contacto</p>
+      <p>Libro de Reclamaciones</p>
+    </div>
+    <div class="footer-section">
+      <h4>SOPORTE</h4>
+      <p>Términos y Condiciones</p>
+      <p>Políticas de Cookies</p>
+      <p>Políticas de Privacidad</p>
+    </div>
+  </footer>
+</body>
+</html>
