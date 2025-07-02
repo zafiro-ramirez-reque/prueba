@@ -1,420 +1,277 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulación de Pago - Beauty Bliss</title>
-    <style>
-        :root {
-            --primary: #e91e63;
-            --primary-dark: #c2185b;
-            --secondary: #9c27b0;
-            --text: #333;
-            --light: #f8f8f8;
-            --success: #4CAF50;
-            --error: #F44336;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beauty Bliss</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
+    }
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    .producto {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      text-align: center;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: var(--text);
-        }
+    .producto:hover {
+      transform: scale(1.03);
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+    .producto img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
 
-        h1 {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+    .producto button {
+      margin-top: 0.5rem;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        .payment-tabs {
-            display: flex;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #ddd;
-        }
+    .producto button:hover {
+      background-color: #c2185b;
+    }
 
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
+    .categorias {
+      display: flex;
+      justify-content: space-around;
+      padding: 1rem;
+    }
 
-        .tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
+    .categoria {
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+    }
 
-        .payment-form {
-            display: none;
-        }
+    .categoria img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+    }
 
-        .payment-form.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
+    .categoria p {
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+    .cart-icon {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      background: #e91e63;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      font-size: 1.2rem;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .row {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .row .form-group {
-            flex: 1;
-        }
-
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 1rem;
-            width: 100%;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: 600;
-        }
-
-        button:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .currency {
-            position: relative;
-        }
-
-        .currency::before {
-            content: "S/.";
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text);
-            font-weight: bold;
-        }
-
-        .currency input {
-            padding-left: 40px;
-        }
-
-        .confirmation {
-            display: none;
-            text-align: center;
-            animation: fadeIn 1s;
-        }
-
-        .confirmation svg {
-            width: 60px;
-            height: 60px;
-            fill: var(--success);
-            margin-bottom: 1rem;
-        }
-
-        .confirmation h2 {
-            color: var(--success);
-        }
-
-        .confirmation p {
-            margin-top: 1rem;
-            color: var(--text);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .yape-qr {
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .yape-qr img {
-            width: 150px;
-            height: 150px;
-            border: 1px solid #ddd;
-            padding: 0.5rem;
-        }
-
-        .product-summary {
-            background: var(--light);
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .total {
-            font-weight: bold;
-            font-size: 1.2rem;
-            border-top: 1px solid #ddd;
-            padding-top: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .loader {
-            display: none;
-            width: 50px;
-            height: 50px;
-            margin: 1rem auto;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    .oculto {
+      display: none;
+      position: fixed;
+      right: 20px;
+      top: 80px;
+      background: white;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      width: 250px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Finalizar Compra</h1>
-
-        <!-- Resumen del pedido -->
-        <div class="product-summary">
-            <h3>Tu Pedido</h3>
-            <div class="product-item">
-                <span>Lipstick</span>
-                <span>S/. 18.00</span>
-            </div>
-            <div class="product-item">
-                <span>Colonia</span>
-                <span>S/. 23.00</span>
-            </div>
-            <div class="product-item">
-                <span>Crema Hidratante</span>
-                <span>S/. 11.00</span>
-            </div>
-            <div class="total">
-                <span>Total</span>
-                <span>S/. 52.00</span>
-            </div>
-        </div>
-
-        <!-- Tabs de métodos de pago -->
-        <div class="payment-tabs">
-            <div class="tab active" onclick="showTab('card')">Tarjeta</div>
-            <div class="tab" onclick="showTab('yape')">Yape</div>
-        </div>
-
-        <!-- Formulario de pago con tarjeta -->
-        <div id="card-form" class="payment-form active">
-            <div class="form-group">
-                <label for="card-number">Número de Tarjeta</label>
-                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <label for="card-expiry">Fecha de Expiración</label>
-                    <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
-                </div>
-                <div class="form-group">
-                    <label for="card-cvv">CVV</label>
-                    <input type="text" id="card-cvv" placeholder="123" maxlength="3">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="card-name">Nombre en la Tarjeta</label>
-                <input type="text" id="card-name" placeholder="JUAN PEREZ">
-            </div>
-            <div class="form-group">
-                <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" placeholder="tu@email.com">
-            </div>
-            <button onclick="processPayment()">Pagar S/. 52.00</button>
-            
-            <!-- Loader -->
-            <div id="card-loader" class="loader"></div>
-        </div>
-
-        <!-- Formulario de pago con Yape -->
-        <div id="yape-form" class="payment-form">
-            <div class="yape-qr">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/10063411-f472-475d-8bd9-21da653d7f1b.png" alt="Código QR de Yape para pagar S/. 52.00">
-            </div>
-            <div class="form-group">
-                <label for="yape-number">Número de Celular</label>
-                <input type="text" id="yape-number" placeholder="999 999 999" maxlength="9">
-            </div>
-            <div class="form-group">
-                <label for="yape-email">Correo Electrónico</label>
-                <input type="email" id="yape-email" placeholder="tu@email.com">
-            </div>
-            <button onclick="processYape()">Confirmar Pago</button>
-            
-            <!-- Loader -->
-            <div id="yape-loader" class="loader"></div>
-        </div>
-
-        <!-- Mensaje de confirmación -->
-        <div id="confirmation" class="confirmation">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-            <h2>¡Pago Completado!</h2>
-            <p>Hemos enviado un correo de confirmación con los detalles de tu compra.</p>
-            <p>Gracias por comprar en Beauty Bliss.</p>
-        </div>
+  <header class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="Beauty Bliss Logo">
     </div>
+    <nav class="nav-links">
+      <a href="#">Inicio</a>
+      <a href="Sobre-nosotros.html">Sobre nosotros</a>
+      <a href="maquillaje.html">Maquillaje</a>
+      <a href="cuidado de la piel.html">Cuidado de la piel</a>
+      <a href="fragancias.html">Fragancias</a>
+      <a href="ofertas.html">Ofertas</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
 
-    <script>
-        // Mostrar el tab seleccionado
-        function showTab(tabId) {
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.payment-form').forEach(form => {
-                form.classList.remove('active');
-            });
-            
-            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
-            document.getElementById(`${tabId}-form`).classList.add('active');
-        }
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒<span id="cart-count">0</span>
+  </div>
 
-        // Validar formulario de tarjeta
-        function validateCard() {
-            const cardNumber = document.getElementById('card-number').value;
-            const cardExpiry = document.getElementById('card-expiry').value;
-            const cardCvv = document.getElementById('card-cvv').value;
-            const cardName = document.getElementById('card-name').value;
-            const email = document.getElementById('email').value;
-            
-            if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, ''))) {
-                alert('Por favor ingresa un número de tarjeta válido (16 dígitos)');
-                return false;
-            }
-            
-            if (!/^\d{2}\/\d{2}$/.test(cardExpiry)) {
-                alert('Por favor ingresa una fecha de expiración válida (MM/AA)');
-                return false;
-            }
-            
-            if (!/^\d{3}$/.test(cardCvv)) {
-                alert('Por favor ingresa un CVV válido (3 dígitos)');
-                return false;
-            }
-            
-            if (cardName.trim() === '') {
-                alert('Por favor ingresa el nombre como aparece en la tarjeta');
-                return false;
-            }
-            
-            if (!/^\S+@\S+\.\S+$/.test(email)) {
-                alert('Por favor ingresa un correo electrónico válido');
-                return false;
-            }
-            
-            return true;
-        }
+  <div id="carrito" class="oculto">
+    <h3>Carrito</h3>
+    <ul id="carrito-lista"></ul>
+    <p>Total: S/. <span id="total">0.00</span></p>
+    <button id="cerrar-carrito">Cerrar</button>
+    <button id="vaciar-carrito">Vaciar Carrito</button>
+    <button id="pagar-btn">Pagar</button>
+  </div>
 
-        // Validar formulario de Yape
-        function validateYape() {
-            const yapeNumber = document.getElementById('yape-number').value;
-            const email = document.getElementById('yape-email').value;
-            
-            if (!/^\d{9}$/.test(yapeNumber.replace(/\s/g, ''))) {
-                alert('Por favor ingresa un número de celular válido (9 dígitos)');
-                return false;
-            }
-            
-            if (!/^\S+@\S+\.\S+$/.test(email)) {
-                alert('Por favor ingresa un correo electrónico válido');
-                return false;
-            }
-            
-            return true;
-        }
+  <main>
+    <section class="destacados">
+      <h2>Descubre</h2>
+      <h1>Nuestros Exóticos Productos de Belleza</h1>
+      <button class="comprar-btn">Comprar ahora</button>
 
-        // Simular procesamiento de pago con tarjeta
-        function processPayment() {
-            if (!validateCard()) return;
-            
-            const loader = document.getElementById('card-loader');
-            loader.style.display = 'block';
-            
-            // Simular tiempo de procesamiento
-            setTimeout(() => {
-                loader.style.display = 'none';
-                
-                // Mostrar confirmación
-                document.getElementById('card-form').style.display = 'none';
-                document.getElementById('confirmation').style.display = 'block';
-                
-                // Simular envío de correo
-                const email = document.getElementById('email').value;
-                console.log(`Simulando envío de correo a: ${email}`);
-                console.log('Asunto: Confirmación de pago en Beauty Bliss');
-                console.log('Contenido: Gracias por tu compra de S/. 52.00 usando tarjeta.');
-            }, 2000);
-        }
+      <div class="categorias">
+        <a class="categoria" href="cuidado de la piel.html">
+          <img src="skincare.png" alt="Skincare">
+          <p>Cuidado de la Piel</p>
+        </a>
+        <a class="categoria" href="maquillaje.html">
+          <img src="maquillaje.png" alt="Maquillaje">
+          <p>Maquillaje</p>
+        </a>
+        <a class="categoria" href="cabello.html">
+          <img src="cabello.png" alt="Cabello">
+          <p>Cuidado del Cabello</p>
+        </a>
+      </div>
+    </section>
 
-        // Simular procesamiento de pago con Yape
-        function processYape() {
-            if (!validateYape()) return;
-            
-            const loader = document.getElementById('yape-loader');
-            loader.style.display = 'block';
-            
-            // Simular tiempo de procesamiento
-            setTimeout(() => {
-                loader.style.display = 'none';
-                
-                // Mostrar confirmación
-                document.getElementById('yape-form').style.display = 'none';
-                document.getElementById('confirmation').style.display = 'block';
-                
-                // Simular envío de correo
-                const email = document.getElementById('yape-email').value;
-                console.log(`Simulando envío de correo a: ${email}`);
-                console.log('Asunto: Confirmación de pago en Beauty Bliss');
-                console.log('Contenido: Gracias por tu compra de S/. 52.00 usando Yape.');
-            }, 2000);
+    <section class="destacados">
+      <h2>Productos Destacados</h2>
+      <div class="grid-productos">
+        <div class="producto" data-nombre="Lipstick" data-precio="18">
+          <img src="labial.png" alt="Lipstick">
+          <p>Lipstick - S/. 18.00</p>
+          <button class="add-to-cart">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Colonia" data-precio="23">
+          <img src="colonia.png" alt="Colonia">
+          <p>Colonia - S/. 23.00</p>
+          <button class="add-to-cart">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Crema Hidratante" data-precio="11">
+          <img src="crema hidratante.png" alt="Crema Humectante">
+          <p>Crema Hidratante - S/. 11.00</p>
+          <button class="add-to-cart">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Esmalte" data-precio="5">
+          <img src="esmalte.png" alt="Esmalte">
+          <p>Esmalte - S/. 5.00</p>
+          <button class="add-to-cart">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Tónico Facial" data-precio="12">
+          <img src="tonico.png" alt="Tónico">
+          <p>Tónico Facial - S/. 12.00</p>
+          <button class="add-to-cart">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Perfume Rosas" data-precio="30">
+          <img src="rosas.png" alt="Perfume">
+          <p>Perfume Rosas - S/. 30.00</p>
+          <button class="add-to-cart">Agregar al carrito</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-section">
+      <h4>Sobre Beauty Bliss</h4>
+      <p>Salud y Cuidado</p>
+      <p>Sustentabilidad</p>
+      <p>Nuestro Compromiso</p>
+    </div>
+    <div class="footer-section">
+      <h4>AYUDA</h4>
+      <p>Encuentra Beauty Bliss</p>
+      <p>Ayuda y Contacto</p>
+      <p>Libro de Reclamaciones</p>
+    </div>
+    <div class="footer-section">
+      <h4>SOPORTE</h4>
+      <p>Términos y Condiciones</p>
+      <p>Políticas de Cookies</p>
+      <p>Políticas de Privacidad</p>
+    </div>
+  </footer>
+
+  <script>
+    // Carrito de compras
+    let cart = [];
+    let total = 0;
+
+    function toggleCart() {
+      document.getElementById('carrito').classList.toggle('oculto');
+    }
+
+    function updateCart() {
+      const cartList = document.getElementById('carrito-lista');
+      const cartCount = document.getElementById('cart-count');
+      const cartTotal = document.getElementById('total');
+      
+      cartList.innerHTML = '';
+      cartCount.textContent = cart.length;
+      cartTotal.textContent = total.toFixed(2);
+      
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - S/.${item.price.toFixed(2)}`;
+        cartList.appendChild(li);
+      });
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      total += price;
+      updateCart();
+    }
+
+    document.getElementById('cerrar-carrito').addEventListener('click', toggleCart);
+    document.getElementById('vaciar-carrito').addEventListener('click', () => {
+      cart = [];
+      total = 0;
+      updateCart();
+    });
+
+    // Event listeners for add to cart buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', function() {
+        const productDiv = this.closest('.producto');
+        const name = productDiv.dataset.nombre;
+        const price = parseFloat(productDiv.dataset.precio);
+        addToCart(name, price);
+        
+        // Show the cart after adding an item
+        if (document.getElementById('carrito').classList.contains('oculto')) {
+          toggleCart();
         }
-    </script>
+      });
+    });
+
+    // Simulación de pago
+    document.getElementById('pagar-btn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío. Agrega productos para continuar.');
+        return;
+      }
+      alert(`Total a pagar: S/. ${total.toFixed(2)}`);
+      // Aquí puedes agregar la lógica para la pasarela de pagos
+    });
+  </script>
 </body>
 </html>
-
